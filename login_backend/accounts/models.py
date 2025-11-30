@@ -8,4 +8,4 @@ class Profile(models.Model):
     image = models.ImageField(upload_to='profiles/', blank=True, null=True)
 
     def __str__(self):
-        return f"{self.user.username}'s Profile"
+        return f"profile for {self.user.username}"
