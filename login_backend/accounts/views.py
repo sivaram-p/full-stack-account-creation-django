@@ -5,3 +5,6 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+def logoutfun(request):
+    logout(request)
+    return redirect('loginpage')
