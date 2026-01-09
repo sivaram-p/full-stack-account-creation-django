@@ -5,6 +5,10 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-def logoutfun(request):
+def logoutuserfun(request):
     logout(request)
     return redirect('loginpage')
+def loginfun(request):
+    return render(request,'login.html')
+def signupfun(request):
+    return render(request,'signup.html')

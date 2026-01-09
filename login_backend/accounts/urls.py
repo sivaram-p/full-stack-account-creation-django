@@ -3,9 +3,9 @@ from django.urls import path
 from accounts import views
 
 urlpatterns = [
-    path('',views.loginfun,name='loginpage'),
-    path('login/',views.loginfun,name='loginpage'),
-    path('signup/',views.signupfun,name='signuppage'),
-    path('dashboard/',views.dashboardfun,name='dashboardpage'),
-    path('logout/',views.logoutuserfun,name='logoutpage'),
+    path('',views.loginfun,name='login'),
+    path('login/',views.loginfun,name='login'),
+    path('signup/',views.signupfun,name='signup'),
+    #path('dashboard/',views.dashboardfun,name='dashboardpage'),
+    path('logout/',views.logoutuserfun,name='logout'),
 ]

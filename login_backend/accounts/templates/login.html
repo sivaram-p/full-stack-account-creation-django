@@ -1,17 +1,17 @@
-{{% load static %}}
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
       <title>LOGIN</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <link rel="stylesheet" href="Login/style.css">
+       <link rel="stylesheet" href="{% static 'style.css' %}">
        <meta name="viewport" content="device-width, initial-scale=1.0">
     </head>
     <body>
       <nav>
         <ul>
-          <li><a class="active" href="index.html">LOGIN</a></li>
-          <li><a href="Login/signup.html">SIGN UP</a></li>
+          <li><a class="active" href="{%url 'login' %}">LOGIN</a></li>
+          <li><a href="{%url 'signup' %}">SIGN UP</a></li>
         </ul>
       </nav>
       <br>
@@ -28,7 +28,7 @@
               <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
             <button type="submit" onclick="location.href='Login/dashboard.html'">Login</button>
-            <a href="Login/signup.html">new user</a>
+            <a href="{%url 'signup'%}">new user</a>
          </form>
         </div>
        </div>
@@ -38,7 +38,7 @@
 
 
 <!--- pop up script -->
-<script>
+    <script>
         function showModal(msg) {
             const modal = document.getElementById('messageModal');
             const msgContainer = document.getElementById('modalMessage');
@@ -59,4 +59,19 @@
                 closeModal();
             }
         }
-    </script>
+        </script>
+
+      
+        {% if messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let msgText = "";
+                {% for message in messages %}
+                    msgText += "{{ message|escapejs }}<br>";
+                {% endfor %}
+                if (msgText) showModal(msgText);
+            });
+        </script>
+    {% endif %}
+    </body>
+</html>

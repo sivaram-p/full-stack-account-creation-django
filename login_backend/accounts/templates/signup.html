@@ -1,0 +1,127 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>SIGN-UP</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link rel="stylesheet" href="{% static 'style.css' %}">
+       <meta name="viewport" content="device-width, initial-scale=1.0">
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="{%url 'login'%}">LOGIN</a></li>
+          <li><a class="active" href="{%url 'signup'%}">SIGN UP</a></li>
+        </ul>
+      </nav>
+      <br>
+      <div class="container">
+        <div class="card">
+          <h2>Sign Up</h2>
+          <form action="#">
+            <div class="input-group">
+              <label for="fullname">Full Name</label>
+              <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+            </div>
+            <div class="input-group">
+              <label for="phone">Phone No:</label>
+              <input type="text" id="phone" name="phone" placeholder="Enter your Mobile No:" required>
+            </div>
+            <div class="input-group">
+              <label for="email">Email</label>
+              <input type="text" id="email" name="email" placeholder="Enter your Email id" required>
+            </div>
+            <div class="input-group">
+              <label for="userid">User-ID</label>
+              <input type="text" id="userid" name="userid" placeholder="Enter a new User-id" required>
+            </div>
+            <div class="input-group">
+              <label for="about">About</label>
+              <input type="text" id="about" name="about" placeholder="Tell a short bio about yourself" >
+            </div>
+            <div class="input-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+           <div class="input-group profile-upload">
+          <label for="profilepic">Profile Picture</label>
+          <label for="profilepic" class="avatar-preview">
+            <img id="avatar" src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="profilePic" />
+          </label>
+          <input type="file" id="profilepic" accept="image/*" hidden tabindex="-1"/>
+               
+          <button type="button" id="select-upload">Select image</button>
+               <br>
+          <button type="button" id="removebtn">remove image</button>
+        </div>
+            <button type="submit" onclick="location.href='dashboard.html'">Sign Up</button>
+            <a href="{%url 'login'%}">already registered</a>
+         </form>
+        </div>
+       </div>
+    </body>
+    </html>
+
+<!--- pop up script -->
+    <script>
+        
+        function showModal(msg) {
+            const modal = document.getElementById('messageModal');
+            const msgContainer = document.getElementById('modalMessage');
+            msgContainer.innerHTML = msg;
+            modal.style.display = 'flex';
+            setTimeout(() => { modal.classList.add('show'); }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('messageModal');
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
+        }
+        
+        window.onclick = function(event) {
+            const modal = document.getElementById('messageModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        </script>
+
+        {% if messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let msgText = "";
+                {% for message in messages %}
+                    msgText += "{{ message|escapejs }}<br>";
+                {% endfor %}
+                if (msgText) showModal(msgText);
+            });
+        </script>
+    {% endif %}
+    </body>
+</html>
+        <!--- image preview script -->
+<script>
+
+  const fileInput = document.getElementById('profilepic');
+  const avatarImg = document.getElementById('avatar');
+  const removebtn = document.getElementById('removebtn');
+  const selectbtn = document.getElementById('select-upload');
+    fileInput.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+      avatarImg.src = e.target.result;  
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+    selectbtn.addEventListener('click', function() {
+        fileInput.click();
+});
+    removebtn.addEventListener('click',function(){
+      fileInput.value='';
+      avatarImg.src='https://cdn-icons-png.flaticon.com/512/747/747376.png';
+  });
+</script>
