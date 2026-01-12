@@ -1,0 +1,98 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard – Sivaram</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'dash.css'%}">
+</head>
+<body>
+
+<nav>
+  <ul>
+    <li><a class="active" href="{%url 'dashboard' %}">DASHBOARD</a></li>
+  </ul>
+  <ul id="nav-right">
+    <li><h3 class="username">Sivaram</h3></li>
+    <li><a class="logout" href="{% url 'logout' %}">LOGOUT</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <div class="dashboard-header">
+      <div class="header-text">
+        <div class="dashboard-greeting">Current Username</div>
+        <div class="dashboard-username">@Sivaram</div>
+      </div>
+      
+      <div class="avatar-preview">
+        <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Profile">
+      </div>
+    </div>
+    
+    <div class="dashboard-details">
+      <h1>Profile Details</h1>
+      <h2>Full Name: Sivaram.P</h2>
+      <h3>Phone: xxxxxx</h3>
+      <h3>Email:  @gmail.com</h3>
+      <h3>About: This is how the about looks</h3>
+      <br>
+    </div>
+  </div>
+</div>
+
+<div id="messageModal" class="modal-overlay">
+    <div class="modal-box">
+        <div id="modalMessage" class="modal-message"></div>
+        <button class="modal-close-btn" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<!---message pop up script -->
+
+<script>
+    function showModal(msg) {
+        const modal = document.getElementById('messageModal');
+        const msgContainer = document.getElementById('modalMessage');
+        msgContainer.innerHTML = msg;
+        modal.style.display = 'flex';
+        setTimeout(() => { modal.classList.add('show'); }, 10);
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('messageModal');
+        modal.classList.remove('show');
+        setTimeout(() => { modal.style.display = 'none'; }, 300);
+    }
+    
+    window.onclick = function(event) {
+        const modal = document.getElementById('messageModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+//example content for pop up
+    document.addEventListener("DOMContentLoaded", function() {
+        showModal("Successful login to Sivaram");
+    });
+</script>
+<!---message or error script -->
+        {% if messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let msgText = "";
+                {% for message in messages %}
+                    msgText += "{{ message|escapejs }}<br>";
+                {% endfor %}
+                if (msgText) showModal(msgText);
+            });
+        </script>
+    {% endif %}
+    </body>
+</html>
+
+
+</body>
+</html>

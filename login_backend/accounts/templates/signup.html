@@ -18,7 +18,8 @@
       <div class="container">
         <div class="card">
           <h2>Sign Up</h2>
-          <form action="#">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="input-group">
               <label for="fullname">Full Name</label>
               <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
@@ -54,7 +55,7 @@
                <br>
           <button type="button" id="removebtn">remove image</button>
         </div>
-            <button type="submit" onclick="location.href='dashboard.html'">Sign Up</button>
+            <button type="submit">Sign Up</button>
             <a href="{%url 'login'%}">already registered</a>
          </form>
         </div>
@@ -86,7 +87,7 @@
             }
         }
         </script>
-
+<!---message or error script -->
         {% if messages %}
         <script>
             document.addEventListener("DOMContentLoaded", function() {

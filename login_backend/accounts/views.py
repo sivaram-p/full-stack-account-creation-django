@@ -12,3 +12,6 @@ def loginfun(request):
     return render(request,'login.html')
 def signupfun(request):
     return render(request,'signup.html')
+
+def dashboardfun(request):
+    return render(request,'dashboard.html')
