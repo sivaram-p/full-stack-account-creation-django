@@ -22,7 +22,7 @@
             {% csrf_token %}
             <div class="input-group">
               <label for="fullname">Full Name</label>
-              <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+              <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" >
             </div>
             <div class="input-group">
               <label for="phone">Phone No:</label>
@@ -53,7 +53,7 @@
           <label for="profilepic" class="avatar-preview">
             <img id="avatar" src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="profilePic" />
           </label>
-          <input type="file" id="profilepic" accept="image/*" hidden tabindex="-1"/>
+          <input type="file" id="profilepic" name="profilepic" accept="image/*" hidden/>
                
           <button type="button" id="select-upload">Select image</button>
                <br>
@@ -64,8 +64,12 @@
          </form>
         </div>
        </div>
-    </body>
-    </html>
+       <div id="messageModal" class="modal-overlay">
+        <div class="modal-box">
+            <div id="modalMessage" class="modal-message"></div>
+            <button class="modal-close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
 
 <!--- pop up script -->
     <script>
@@ -103,30 +107,31 @@
             });
         </script>
     {% endif %}
-    </body>
-</html>
-        <!--- image preview script -->
-<script>
-
-  const fileInput = document.getElementById('profilepic');
-  const avatarImg = document.getElementById('avatar');
-  const removebtn = document.getElementById('removebtn');
-  const selectbtn = document.getElementById('select-upload');
-    fileInput.addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-      avatarImg.src = e.target.result;  
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-    selectbtn.addEventListener('click', function() {
+    <!--- image preview script -->
+    <script>
+      
+      const fileInput = document.getElementById('profilepic');
+      const avatarImg = document.getElementById('avatar');
+      const removebtn = document.getElementById('removebtn');
+      const selectbtn = document.getElementById('select-upload');
+      fileInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            avatarImg.src = e.target.result;  
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      selectbtn.addEventListener('click', function() {
         fileInput.click();
-});
-    removebtn.addEventListener('click',function(){
-      fileInput.value='';
-      avatarImg.src='https://cdn-icons-png.flaticon.com/512/747/747376.png';
-  });
-</script>
+      });
+      removebtn.addEventListener('click',function(){
+        fileInput.value='';
+        avatarImg.src='https://cdn-icons-png.flaticon.com/512/747/747376.png';
+      });
+    </script>
+
+</body>
+</html>
