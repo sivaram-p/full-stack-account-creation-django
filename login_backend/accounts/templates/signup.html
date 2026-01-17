@@ -6,6 +6,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
        <link rel="stylesheet" href="{% static 'style.css' %}">
        <meta name="viewport" content="device-width, initial-scale=1.0">
+       <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
     </head>
     <body>
       <nav>
@@ -22,7 +24,7 @@
             {% csrf_token %}
             <div class="input-group">
               <label for="fullname">Full Name</label>
-              <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" >
+              <input type="text" id="fullname" name="fullname" placeholder="Enter your full name">
             </div>
             <div class="input-group">
               <label for="phone">Phone No:</label>
@@ -42,7 +44,7 @@
             </div>
             <div class="input-group">
               <label for="password">Password</label>
-              <input type="password" id="password" name="password" placeholder="Enter your password" required>
+              <input type="password" id="password1" name="password1" placeholder="Enter your password" required>
             </div>
             <div class="input-group">
               <label for="password2">Confirm Password</label>
