@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import addons
 from django.db import IntegrityError
+from django.http import HttpResponse
 import logging
 logger = logging.getLogger(__name__)
 
@@ -14,6 +15,15 @@ def logoutuserfun(request):
     return redirect('loginpage')
 def loginfun(request):
     return render(request,'login.html')
+
+def check_username(request):
+    username= request.GET.get('userid')
+    if User.objects.filter(username=username).exists():
+        return HttpResponse("<span style='color:red'>User-ID already taken</span>")
+    return HttpResponse("<span style='color:green'>User-ID available for use</span>")
+
+
+
 def signupfun(request):
     if request.method == 'POST':
         username = request.POST.get('userid')

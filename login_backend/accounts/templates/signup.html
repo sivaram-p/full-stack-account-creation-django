@@ -38,7 +38,11 @@
             </div>
             <div class="input-group">
               <label for="userid">User-ID</label>
-              <input type="text" id="userid" name="userid" placeholder="Enter a new User-id" required>
+              <input type="text" id="userid" name="userid" placeholder="Enter a new User-id" required
+              hx-get="{% url 'check_username' %}"
+              hx-trigger="keyup changed delay:500ms"
+              hx-target=".userid_conflict"
+              hx-include="[name='userid']">
               <div class="userid_conflict"></div>
             </div>
             <div class="input-group">
