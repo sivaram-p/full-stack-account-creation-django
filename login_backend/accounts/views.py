@@ -3,10 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-try:
-    from .models import addons
-except ImportError:
-    addons = None 
+from .models import addons
+from django.db import IntegrityError
+import logging
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 def logoutuserfun(request):
@@ -25,7 +25,7 @@ def signupfun(request):
         phone = request.POST.get('phone')
         about = request.POST.get('about')
         if not all([fullname, email, username, phone, password1, password2]):
-            messages.error(request, "400 Bad Request - Didnt recieve all fields")
+            messages.error(request, "HTTP 422 - Didnt recieve all fields")
             return render(request, 'signup.html')
         
         if User.objects.filter(email=email).exists():
@@ -39,11 +39,23 @@ def signupfun(request):
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
             return render(request, 'signup.html')
-        #if addons.phone.filter(phone=phone).exists():
-        #    messages.error(request, "Phone number already registered.")
-         #   return render(request, 'signup.html')
-
         
+        if addons.objects.filter(phone=phone).exists():
+           messages.error(request, "HTTP 409 Conflict - Phone number already registered.")
+           return render(request, 'signup.html')
+        try:
+            user = User.objects.create_user(username=username, password=password1, email=email, first_name=fullname)
+            addons.objects.create(user=user, phone=phone, about=about, profilepic=profilepic)
+        except IntegrityError:
+            messages.error(request,"400 Bad Request - sorry account creation failed")
+            return render(request,'signup.html')
+        except Exception:
+            logger.exception("Unexpected error during signup")
+            raise
+
+        messages.success(request, "Account created successfully")
+        return redirect("login")
+
     return render(request,'signup.html')
 
 def dashboardfun(request):

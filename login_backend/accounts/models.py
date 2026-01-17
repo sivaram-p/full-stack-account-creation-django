@@ -6,7 +6,7 @@ class addons(models.Model):
     #additional fields in our <form>
     phone = models.CharField(max_length=15, blank=True)
     about = models.TextField(max_length=500, blank=True)
-    image = models.ImageField(upload_to='profiles/', blank=True, null=True)
+    profilepic = models.ImageField(upload_to='profiles/', blank=True, null=True)
 
     def __str__(self):
         return f"addons for {self.user.username}"
