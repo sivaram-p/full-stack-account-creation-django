@@ -81,8 +81,27 @@ nav li a:hover::after {
 .input-group {
   margin-bottom: 20px;
   margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.userid_conflict, .email_conflict, .phone_conflict, .password_conflict {
+  width: 85%;
+  margin-top: 6px;
+  padding-left: 13px;
+  font-size: 14px;
 }
 
+.userid_conflict:empty, .email_conflict:empty, .phone_conflict:empty, .password_conflict:empty {
+  display: none;
+}
+
+.userid_conflict .error, .email_conflict .error, .phone_conflict .error, .password_conflict .error {
+  color: red;
+}
+
+.userid_conflict .success {
+  color: green;
+}
 .input-group label {
   display: block;
   margin-bottom: 5px;

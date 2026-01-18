@@ -28,12 +28,20 @@
             </div>
             <div class="input-group">
               <label for="phone">Phone No:</label>
-              <input type="text" id="phone" name="phone" placeholder="Enter your Mobile No:" required>
+              <input type="text" id="phone" name="phone" placeholder="Enter your Mobile No:" required
+              hx-get="{% url 'check_phone' %}"
+              hx-trigger="keyup changed delay:500ms"
+              hx-target=".phone_conflict"
+              hx-include="[name='phone']">
               <div class="phone_conflict"></div>
             </div>
             <div class="input-group">
               <label for="email">Email</label>
-              <input type="text" id="email" name="email" placeholder="Enter your Email id" required>
+              <input type="text" id="email" name="email" placeholder="Enter your Email id" required
+              hx-get="{% url 'check_email' %}"
+              hx-trigger="keyup changed delay:500ms"
+              hx-target=".email_conflict"
+              hx-include="[name='email']">
               <div class="email_conflict"></div>
             </div>
             <div class="input-group">
@@ -80,6 +88,24 @@
             <button class="modal-close-btn" onclick="closeModal()">Close</button>
         </div>
     </div>
+
+<!--- password match check script -->
+<script>
+const p1 = document.getElementById("password1");
+const p2 = document.getElementById("password2");
+const division = document.querySelector(".password_conflict");
+
+function checkPassword() {
+  if (p2.value && p1.value !== p2.value) {
+    division.innerHTML = "<span class='error'>Passwords do not match</span>";
+  } else {
+    division.innerHTML = "";
+  }
+}
+
+p1.addEventListener("keyup", checkPassword);
+p2.addEventListener("keyup", checkPassçword);
+</script>
 
 <!--- pop up script -->
     <script>

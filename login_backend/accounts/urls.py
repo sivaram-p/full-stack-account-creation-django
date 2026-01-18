@@ -9,4 +9,6 @@ urlpatterns = [
     path('logout/',views.logoutuserfun,name='logout'),
     path('dashboard/',views.dashboardfun,name='dashboard'),
     path('check_username/',views.check_username,name='check_username'),
+    path('check_email/',views.check_email,name='check_email'),
+    path('check_phone/',views.check_phone,name='check_phone'),
 ]
