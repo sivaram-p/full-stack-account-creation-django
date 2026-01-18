@@ -28,7 +28,7 @@
             </div>
             <div class="input-group">
               <label for="phone">Phone No:</label>
-              <input type="text" id="phone" name="phone" placeholder="Enter your Mobile No:" required
+              <input type="text" id="phone" name="phone" placeholder="Enter your Mobile No:" pattern="[0-9]{10}" required
               hx-get="{% url 'check_phone' %}"
               hx-trigger="keyup changed delay:500ms"
               hx-target=".phone_conflict"
@@ -37,7 +37,7 @@
             </div>
             <div class="input-group">
               <label for="email">Email</label>
-              <input type="text" id="email" name="email" placeholder="Enter your Email id" required
+              <input type="email" id="email" name="email" placeholder="Enter your Email id" required
               hx-get="{% url 'check_email' %}"
               hx-trigger="keyup changed delay:500ms"
               hx-target=".email_conflict"
@@ -169,5 +169,14 @@ p2.addEventListener("keyup", checkPassçword);
       });
     </script>
 
+<script>
+document.body.addEventListener("htmx:responseError", function (evt) {
+    showModal("HTTP 500 - Server unavailable. Please try again after some time.");
+});
+
+document.body.addEventListener("htmx:sendError", function (evt) {
+    showModal("Unable to reach server. Check your connection and try again.");
+});
+</script>
 </body>
 </html>

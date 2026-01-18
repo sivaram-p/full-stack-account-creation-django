@@ -16,12 +16,13 @@ def logoutuserfun(request):
 def loginfun(request):
     return render(request,'login.html')
 
+
 def check_username(request):
     username= request.GET.get('userid')
     if len(username) < 1:
         return HttpResponse('')
     if User.objects.filter(username=username).exists():
-        return HttpResponse("<span class='error'>User-ID already taken</span>")
+        return HttpResponse("<span class='error'>User-ID already in useç</span>")
     return HttpResponse("<span class='success'>User-ID available for use</span>")
 
 def check_email(request):
@@ -29,7 +30,7 @@ def check_email(request):
     if len(email) < 1:
         return HttpResponse('')
     if User.objects.filter(email=email).exists():
-        return HttpResponse("<span class='error'>Email already taken</span>")
+        return HttpResponse("<span class='error'>Email already in use</span>")
     return HttpResponse('')
 
 def check_phone(request):
@@ -37,7 +38,7 @@ def check_phone(request):
     if len(phone) < 1:
         return HttpResponse('')
     if addons.objects.filter(phone=phone).exists():
-        return HttpResponse("<span class='error'>Phone number already taken</span>")
+        return HttpResponse("<span class='error'>Phone number already in use</span>")
     return HttpResponse('')
 
 
