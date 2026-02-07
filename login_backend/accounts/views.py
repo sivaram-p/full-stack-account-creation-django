@@ -105,6 +105,9 @@ def signupfun(request):
         if not phone.isdigit():
             messages.error(request, "Phone number must contain only digits.")
             return render(request, 'signup.html')
+        if len(phone) != 10:
+            messages.error(request, "Phone number must contain 10 digits.")
+            return render(request, 'signup.html')
         
         try:
             user = User.objects.create_user(username=username, password=password1, email=email, first_name=fullname)
