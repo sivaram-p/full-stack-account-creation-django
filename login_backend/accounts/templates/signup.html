@@ -95,16 +95,37 @@ const p1 = document.getElementById("password1");
 const p2 = document.getElementById("password2");
 const division = document.querySelector(".password_conflict");
 
-function checkPassword() {
-  if (p2.value && p1.value !== p2.value) {
-    division.innerHTML = "<span class='error'>Passwords do not match</span>";
-  } else {
-    division.innerHTML = "";
+function isAscii(str) {
+  for (let i = 0; i < str.length; i++) {
+    if (str.charCodeAt(i) > 127){
+      return false;}
   }
+  return true;
+}
+
+function checkPassword() {
+  if (p1.value.length > 0) {
+    if (!isAscii(p1.value)) {
+      division.innerHTML = "<span class='error'>Password must not contain emojis</span>";
+      return;
+    }if (p1.value.length < 8) {
+      division.innerHTML = "<span class='error'>Password must be at least 8 characters</span>";
+      return;
+    }
+    if (!/[A-Za-z]/.test(p1.value) || !/[0-9]/.test(p1.value)) {
+      division.innerHTML = "<span class='error'>Password must contain letters and numbers</span>";
+      return;
+    }
+  }
+  if (p2.value.length > 0 && p2.value !== p1.value) {
+    division.innerHTML = "<span class='error'>Passwords do not match</span>";
+    return;
+  }
+  division.innerHTML = "";
 }
 
 p1.addEventListener("keyup", checkPassword);
-p2.addEventListener("keyup", checkPassçword);
+p2.addEventListener("keyup", checkPassword);
 </script>
 
 <!--- pop up script -->
