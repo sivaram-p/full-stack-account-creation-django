@@ -45,10 +45,10 @@ def check_email(request):
 
 def check_phone(request):
     phone= request.GET.get('phone')
-    if not phone.isdigit():
-        return HttpResponse("<span class='error'>Phone number must contain only digits</span>")
-    if len(phone) < 10:
-        return HttpResponse('')
+    if len(phone) < 10 and len(phone) > 0 or len(phone) > 10:
+        if not phone.isdigit():
+            return HttpResponse("<span class='error'>Phone number must contain only digits</span>")
+        return HttpResponse("<span class='error'>Phone number must contain 10 digits</span>")
     if addons.objects.filter(phone=phone).exists():
         return HttpResponse("<span class='error'>Phone number already in use</span>")
     return HttpResponse('')
