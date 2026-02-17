@@ -1,20 +1,20 @@
-{% load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard – </title>
+  <title>Dashboard – {{ user.username }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'dash.css'%}">
+  <link rel="stylesheet" href="{% static 'dash.css' %}">
 </head>
 <body>
 
 <nav>
   <ul>
-    <li><a class="active" href="{%url 'dashboard' %}">DASHBOARD</a></li>
+    <li><a class="active" href="{% url 'dashboard' %}">DASHBOARD</a></li>
   </ul>
   <ul id="nav-right">
-    <li><h3 class="username">Sivaram</h3></li>
+    <li><h3 class="username"> {{ user.username }}</h3></li>
     <li><a class="logout" href="{% url 'logout' %}">LOGOUT</a></li>
   </ul>
 </nav>
@@ -24,20 +24,24 @@
     <div class="dashboard-header">
       <div class="header-text">
         <div class="dashboard-greeting">Current Username</div>
-        <div class="dashboard-username">@Sivaram</div>
+        <div class="dashboard-username">@{{ user.username }}</div>
       </div>
       
       <div class="avatar-preview">
-        <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Profile">
+        {% if profile.profilepic %}
+          <img src="{{ profile.profilepic.url }}" alt="Profile">
+        {% else %}
+          <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Default">
+        {% endif %}
       </div>
     </div>
     
     <div class="dashboard-details">
       <h1>Profile Details</h1>
-      <h2>Full Name: Sivaram.P</h2>
-      <h3>Phone: xxxxxx</h3>
-      <h3>Email:  @gmail.com</h3>
-      <h3>About: This is how the about looks</h3>
+      <h2>Full Name: {{ user.get_full_name|default:"–" }}</h2>
+      <h3>Phone: {{ profile.phone|default:"–" }}</h3>
+      <h3>Email:  {{ user.email }}</h3>
+      <h3>About: {{ profile.about|default:"No bio yet."|linebreaksbr }}</h3>
       <br>
     </div>
   </div>
@@ -49,9 +53,7 @@
         <button class="modal-close-btn" onclick="closeModal()">Close</button>
     </div>
 </div>
-
-<!---message pop up script -->
-
+<!---pop up script -->
 <script>
     function showModal(msg) {
         const modal = document.getElementById('messageModal');
@@ -73,26 +75,19 @@
             closeModal();
         }
     }
-//example content for pop up
-    document.addEventListener("DOMContentLoaded", function() {
-        showModal("Successful login to Sivaram");
-    });
 </script>
 <!---message or error script -->
-        {% if messages %}
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                let msgText = "";
-                {% for message in messages %}
-                    msgText += "{{ message|escapejs }}<br>";
-                {% endfor %}
-                if (msgText) showModal(msgText);
-            });
-        </script>
-    {% endif %}
-    </body>
-</html>
-
+{% if messages %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let msgText = "";
+            {% for message in messages %}
+                msgText += "{{ message|escapejs }}<br>";
+            {% endfor %}
+            if (msgText) showModal(msgText);
+        });
+    </script>
+{% endif %}
 
 </body>
 </html>

@@ -15,10 +15,26 @@ logger = logging.getLogger(__name__)
 # Create your views here.
 def logoutuserfun(request):
     logout(request)
-    return redirect('loginpage')
-def loginfun(request):
-    return render(request,'login.html')
+    return redirect('login')
 
+def loginfun(request):
+    if request.method == 'POST':
+        username = request.POST.get('userid')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, f"Welcome back, {user.username}!")
+            return redirect('dashboard')
+        else:
+            messages.error(request, "Invalid username or password.")
+    return render(request, 'login.html')
+
+@login_required(login_url='login')
+def dashboardfun(request):
+    profile = addons.objects.filter(user=request.user).first()
+    return render(request, 'dashboard.html', {'profile': profile})
 
 def check_username(request):
     username= request.GET.get('userid')
@@ -126,5 +142,3 @@ def signupfun(request):
 
     return render(request,'signup.html')
 
-def dashboardfun(request):
-    return render(request,'dashboard.html')

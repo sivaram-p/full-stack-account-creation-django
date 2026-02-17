@@ -18,7 +18,8 @@
       <div class="container">
         <div class="card">
           <h2>Login</h2>
-          <form action="#">
+          <form method="POST" action="{% url 'login' %}" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="input-group">
               <label for="userid">User-ID / Email</label>
               <input type="text" id="userid" name="userid" placeholder="Enter your user-id / email" required>
@@ -30,6 +31,7 @@
             <button type="submit">Login</button>
             <a href="{%url 'signup'%}">new user</a>
          </form>
+
         </div>
        </div>
 
